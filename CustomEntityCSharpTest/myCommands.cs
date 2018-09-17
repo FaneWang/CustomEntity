@@ -41,7 +41,7 @@ namespace CustomEntityCSharpTest
                     FaneTriangleWrapper faneTriangle = new FaneTriangleWrapper(pt1, pt2, pt3);
                     //double area = faneTriangle.GetArea();
                     Point3dCollection collection = null;
-                    faneTriangle.GetVerts(collection);
+                    faneTriangle.GetVerts(out collection);
                     foreach (Point3d item in collection)
                     {                        
                         ed.WriteMessage("\n三角形的顶点X坐标：{0}", item.X);

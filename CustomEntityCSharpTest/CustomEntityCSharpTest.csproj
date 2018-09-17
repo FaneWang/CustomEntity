@@ -32,15 +32,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="accoremgd">
-      <HintPath>D:\Autodesk2019\AutoCAD 2019\accoremgd.dll</HintPath>
+      <HintPath>E:\Autodesk2019\AutoCAD 2019\accoremgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="acdbmgd">
-      <HintPath>D:\Autodesk2019\AutoCAD 2019\acdbmgd.dll</HintPath>
+      <HintPath>E:\Autodesk2019\AutoCAD 2019\acdbmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="acmgd">
-      <HintPath>D:\Autodesk2019\AutoCAD 2019\acmgd.dll</HintPath>
+      <HintPath>E:\Autodesk2019\AutoCAD 2019\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />

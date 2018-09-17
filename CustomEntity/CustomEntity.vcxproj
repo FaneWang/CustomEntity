@@ -102,13 +102,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>D:\Autodesk_ObjectARX_2019_Win_64_and_32_Bit\inc;D:\Autodesk_ObjectARX_2019_Win_64_and_32_Bit\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>D:\Autodesk2019\AutoCAD 2019;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>E:\ObjectSDK\Autodesk_ObjectARX_2019_Win_64_and_32_Bit\inc;E:\ObjectSDK\Autodesk_ObjectARX_2019_Win_64_and_32_Bit\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>E:\Autodesk2019\AutoCAD 2019;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;acad.lib;ac1st23.lib;accore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\Autodesk_ObjectARX_2019_Win_64_and_32_Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\ObjectSDK\Autodesk_ObjectARX_2019_Win_64_and_32_Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <NoEntryPoint>true</NoEntryPoint>
     </Link>
   </ItemDefinitionGroup>
