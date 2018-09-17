@@ -105,6 +105,148 @@ Adesk::Boolean FaneTriangle::subWorldDraw(AcGiWorldDraw *mode) {
 	return AcDbEntity::subWorldDraw(mode);
 }
 
+Acad::ErrorStatus FaneTriangle::subGetOsnapPoints(
+	AcDb::OsnapMode osnapMode,
+	int gsSelectionMark,
+	const AcGePoint3d& pickPoint,
+	const AcGePoint3d& lastPoint,
+	const AcGeMatrix3d& viewXform,
+	AcGePoint3dArray& snapPoints,
+	AcDbIntArray& geomIds
+) const {
+	assertReadEnabled();
+
+	AcDbPolyline *polyline = GetPolyline();
+	Acad::ErrorStatus es = polyline->getOsnapPoints(osnapMode, gsSelectionMark, pickPoint, lastPoint, viewXform, snapPoints, geomIds);
+	delete polyline;
+	return es;
+}
+
+Acad::ErrorStatus FaneTriangle::subGetOsnapPoints(
+	AcDb::OsnapMode osnapMode,
+	int gsSelectionMark,
+	const AcGePoint3d& pickPoint,
+	const AcGePoint3d& lastPoint,
+	const AcGeMatrix3d& viewXform,
+	AcGePoint3dArray& snapPoints,
+	AcDbIntArray& geomIds,
+	const AcGeMatrix3d& insertionMat
+) const {
+	assertReadEnabled();
+	return AcDbEntity::getOsnapPoints(osnapMode, gsSelectionMark, pickPoint, lastPoint, viewXform, snapPoints, geomIds, insertionMat);
+}
+
+Acad::ErrorStatus FaneTriangle::subGetGripPoints(
+	AcGePoint3dArray& gripPoints,
+	AcDbIntArray&  osnapModes,
+	AcDbIntArray&  geomIds
+) const {
+	assertReadEnabled();
+	for (size_t i = 0; i < 3; i++)
+	{
+		gripPoints.append(mVerts[i]);
+	}
+
+	return Acad::eOk;
+}
+
+Acad::ErrorStatus FaneTriangle::subMoveGripPointsAt(
+	const AcDbIntArray& indices,
+	const AcGeVector3d& offset
+) {
+	mVerts[indices[0]] += offset;
+	return Acad::eOk;
+}
+
+Acad::ErrorStatus FaneTriangle::subTransformBy(
+	const AcGeMatrix3d& xform
+) {
+	for (size_t i = 0; i < 3; i++)
+	{
+		mVerts[i].transformBy(xform);
+	}
+	return Acad::eOk;
+}
+
+Acad::ErrorStatus FaneTriangle::subGetGeomExtents(
+	AcDbExtents& extents
+) const {
+	for (size_t i = 0; i < 3; i++)
+	{
+		extents.addPoint(mVerts[i]);
+	}
+	return	Acad::eOk;
+}
+
+Acad::ErrorStatus FaneTriangle::subExplode(
+	AcDbVoidPtrArray& entitySet
+) const {
+	for (size_t i = 0; i < 3; i++)
+	{
+		int nextIndex = i + 1;
+		if (i == 2)
+		{
+			nextIndex = 0;
+		}
+
+		AcDbLine *pLine = new AcDbLine(mVerts[i], mVerts[nextIndex]);
+		pLine->setPropertiesFrom(this);
+		entitySet.append(pLine);
+	}
+	return Acad::eOk;
+}
+
+
+void FaneTriangle::subList() const {
+	AcDbEntity::list();
+	for (size_t i = 0; i < 3; i++)
+	{
+		acutPrintf(TEXT("\n ¶¥µã%d£º£¨%g£¬%g£¬%g£©"),mVerts[i].x, mVerts[i].y, mVerts[i].z);
+	}
+}
+
+
+void FaneTriangle::getVerts(AcGePoint3dArray &verts) const {
+	assertReadEnabled();
+	verts.setLogicalLength(0);
+	for (size_t i = 0; i < 3; i++)
+	{
+		verts.append(mVerts[i]);
+	}
+}
+
+double FaneTriangle::getArea() const {
+	AcDbPolyline *pLine = GetPolyline();
+	double area = 0;
+	pLine->getArea(area);
+	delete pLine;
+	return area;
+}
+
+void FaneTriangle::setVertAt(int index, const AcGePoint3d &pt) {
+	assertWriteEnabled();
+	if (index >= 0 && index <= 2)
+	{
+		mVerts[index] = pt;
+	}
+}
+
+
+AcDbPolyline* FaneTriangle::GetPolyline() const {
+	AcDbPolyline* polyline = new AcDbPolyline();
+
+	for (size_t i = 0; i < 3; i++)
+	{
+		polyline->addVertexAt(i, ToPoint2d(mVerts[i]));
+	}
+	polyline->setClosed(Adesk::kTrue);
+	return polyline;
+}
+
+AcGePoint2d FaneTriangle::ToPoint2d(const AcGePoint3d &pt) const {
+	return AcGePoint2d(pt.x, pt.y);
+}
+
 
 
 

@@ -37,10 +37,18 @@ namespace CustomEntityCSharpTest
 
                 if (GetPoint("\n输入起点:",out pt1) && GetPoint("\n输入起点:", out pt2) && GetPoint("\n输入起点:", out pt3))
                 {
+                    Editor ed = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
                     FaneTriangleWrapper faneTriangle = new FaneTriangleWrapper(pt1, pt2, pt3);
+                    //double area = faneTriangle.GetArea();
+                    Point3dCollection collection = null;
+                    faneTriangle.GetVerts(collection);
+                    foreach (Point3d item in collection)
+                    {                        
+                        ed.WriteMessage("\n三角形的顶点X坐标：{0}", item.X);
+                    }
                     btr.AppendEntity(faneTriangle);
                     trans.AddNewlyCreatedDBObject(faneTriangle, true);
-
+                    
                     trans.Commit();
                 }
             }
